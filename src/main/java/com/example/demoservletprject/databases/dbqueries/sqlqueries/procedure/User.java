@@ -36,15 +36,16 @@ public class User {
         return null;
     }
 
-    public static List<Map<String,Object>> getUser(String username, String email, String mobile) throws SQLException {
+    public static List<Map<String,Object>> getUser(String username, String email, String mobile, String password) throws SQLException {
 
         try{
             con = SQLConnection.getDBConnection("todoapp");
             assert con != null;
-            CallableStatement cs = con.prepareCall("{Call sp_get_user(?,?,?) }");
+            CallableStatement cs = con.prepareCall("{Call sp_get_user(?,?,?,?) }");
             cs.setString("usernameValue",username);
             cs.setString("emailValue",email);
             cs.setString("mobileValue",mobile);
+            cs.setString("passwordValue",password);
             procResult = SQLQueries.getQueryResult(cs);
             System.out.println("createUser store proc executed success");
             con.close();

@@ -1,5 +1,6 @@
 package com.example.demoservletprject.servlets;
 import com.example.demoservletprject.databases.dbqueries.sqlqueries.procedure.User;
+import com.example.demoservletprject.supportedclasses.GlobalFunctions;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -7,13 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RegisterServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -36,19 +33,25 @@ public class RegisterServlet extends HttpServlet {
             String email = req.getParameter("user_email");
             String mobileNo = req.getParameter("user_mobile");
             String password = req.getParameter("user_password");
-            String hashedPassword = getHashedPassword(password);
+            String hashedPassword = GlobalFunctions.getHashedPassword(password);
             try{
-                List<Map<String,Object>> userDetails = User.getUser(userName, email, mobileNo);
+                List<Map<String,Object>> userDetails = User.getUser(userName, email, mobileNo, null);
                 if(userDetails != null && userDetails.size() != 0){
                     for(Map<String,Object> userDetail : userDetails ){
                         if(userDetail.get("username").toString().equals(userName)){
                             writer.println("<h2>User Name " + userName + " Already Exists. Choose different username</h2>");
-                        }else if(userDetail.get("mobile").toString().equals(mobileNo)){
+                            return;
+                        }
+                        if(userDetail.get("mobile").toString().equals(mobileNo)){
                             writer.println("<h2>Mobile Number " + mobileNo + " Already Exists. Choose different.</h2>");
-                        }else if(userDetail.get("email").toString().equals(email)){
+                            return;
+                        }
+                        if(userDetail.get("email").toString().equals(email)){
                             writer.println("<h2>Email " + email + " Already Exists. Choose different</h2>");
+                            return;
                         }
                     }
+                    writer.println("<h2>User Already Exists</h2>");
                     return;
                 }
 
@@ -65,21 +68,5 @@ public class RegisterServlet extends HttpServlet {
 
         }
 
-    }
-
-    private String getHashedPassword(String password){
-        try{
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(password.getBytes());
-            byte[] bytes = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for(int i=0;i<bytes.length;i++){
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            return sb.toString();
-        }catch (NoSuchAlgorithmException ex){
-            Logger.getLogger("SHA-1").log(Level.SEVERE,null,ex);
-            return null;
-        }
     }
 }

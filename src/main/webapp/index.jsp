@@ -6,14 +6,11 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1><%= "Hello" %>
 </h1>
 <br/>
-<h1><a href="first">Servlet 1</a></h1>
-<h1><a href="second">Servlet 2</a></h1>
-<h1><a href="third">Servlet 3</a></h1>
 <p>
-    <a href="/register.jsp">Register User Page</a>
+    <a href="${pageContext.request.contextPath}/register.jsp">Register User</a>  <a href="${pageContext.request.contextPath}/login.jsp">Login</a>
 </p>
 </body>
 </html>
