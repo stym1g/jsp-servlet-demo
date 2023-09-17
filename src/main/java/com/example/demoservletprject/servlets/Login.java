@@ -20,7 +20,7 @@ public class Login extends HttpServlet {
         String password = req.getParameter("user_password");
         String hashedPassword = GlobalFunctions.getHashedPassword(password);
         try {
-            List<Map<String, Object>> userDetails = User.getUser(userName, null, null, hashedPassword);
+            List<Map<String, Object>> userDetails = User.getLoggedInUser(userName, hashedPassword);
             if (userDetails != null && userDetails.size() != 0) {
                 for (Map<String, Object> userDetail : userDetails) {
                     if (userDetail.get("username").toString().equals(userName)) {

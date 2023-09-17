@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
             String password = req.getParameter("user_password");
             String hashedPassword = GlobalFunctions.getHashedPassword(password);
             try{
-                List<Map<String,Object>> userDetails = User.getUser(userName, email, mobileNo, null);
+                List<Map<String,Object>> userDetails = User.getUser(userName, email, mobileNo);
                 if(userDetails != null && userDetails.size() != 0){
                     for(Map<String,Object> userDetail : userDetails ){
                         if(userDetail.get("username").toString().equals(userName)){

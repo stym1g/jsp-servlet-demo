@@ -13,14 +13,14 @@ public class SQLServerConnection {
     }
     public static Connection getDBConnection(String dbName) throws SQLException,ClassNotFoundException, SQLTimeoutException {
         String dbDriver = "jdbc:sqlserver";
-        String dbURL = "url:port";
-        String connectionUrl = dbDriver + "://" + dbURL + "/";
-        String dbUserName = "username";
-        String dbPassword = "password";
+        String dbURL = "sqlserver-instance.ctbbxkbnltgp.us-east-1.rds.amazonaws.com:3306";
+        String dbUserName = "admin";
+        String dbPassword = "admin123";
+        String connectionUrl = dbDriver + "://" + dbURL + ";databaseName=" + dbName + ";user=" + dbUserName + ";password=" + dbPassword;
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection conn;
         try {
-            conn = DriverManager.getConnection(connectionUrl + dbName, dbUserName, dbPassword);
+            conn = DriverManager.getConnection(connectionUrl + ";encrypt=true;trustServerCertificate=true");
             return conn;
         }catch ( SQLTimeoutException e){
             e.printStackTrace();

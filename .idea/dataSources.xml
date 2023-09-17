@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@aws-mysql" uuid="5584de64-7e0e-4f85-b8c9-dff23d1922ac">
-      <driver-ref>mysql.8</driver-ref>
+    <data-source source="LOCAL" name="aws-rds-sqlserver-instance-admin" uuid="b4e37666-86d2-4d04-bf86-2b9f63877467">
+      <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://database-1.ctbbxkbnltgp.us-east-1.rds.amazonaws.com:3306/</jdbc-url>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://sqlserver-instance.ctbbxkbnltgp.us-east-1.rds.amazonaws.com:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
